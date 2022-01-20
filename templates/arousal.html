@@ -1,0 +1,14 @@
+{% macro arousal_form(sound_track) -%}
+<form class="form" action="" id="form-misc-{{sound_track}}">
+  <div class="box">
+    <input type="radio" name="higher_arousal" value="a" {{checked(sound_track, "higher_arousal", "a", default="none")}}>A has a higher arousal value than B<br>
+    <input type="radio" name="higher_arousal" value="b" {{checked(sound_track, "higher_arousal", "b", default="none")}}>B has a higher arousal value than A<br>
+    <input type="radio" name="higher_arousal" value="equivalent" {{checked(sound_track, "higher_arousal", "equivalent", default="none")}}>The arousal value is equivalent<br>
+    <input type="radio" name="higher_arousal" value="none" {{checked(sound_track, "higher_arousal", "none", default="none")}}>None of the previous options
+  </div> 
+</form>
+{%- endmacro %}
+
+<!-- arousal -->
+{{arousal_form(sound_track)}}
+

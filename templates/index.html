@@ -1,0 +1,160 @@
+{% macro checked(sound, feature, val, default) -%}
+{% if page_annotations.get(sound, {}).get(feature) == val or (sound not in page_annotations and default == val) %}checked="checked"{% endif %}
+{%- endmacro %}
+
+{% from "arousal.html" import arousal_form with context %}
+{% from "valence.html" import valence_form with context %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    input[type='radio'] { transform: scale(1); }
+    .form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 5px;
+      background-color: white;
+      color: #444;
+    }
+    .box {
+      background-color: white;
+      color: black;
+      border-radius: 5px;
+      padding: 5px;
+      font-size: 100%;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+  <script src="https://unpkg.com/wavesurfer.js"></script>
+  <script>
+    $(function () {
+      // collect and submit answers features
+      function get_answers() {
+        var answers = {};
+
+        // radio inputs
+        var elements = $('.box').find('input:checked');
+        elements.each(function (idx, el) {
+          var key = $(el).attr('name');
+          var obj = {};
+          obj[key] = $(el).val();
+          var track_name = $(el).parents('.track-container').attr('id');
+
+          if (answers[track_name])
+            {
+              answers[track_name] = Object.assign(answers[track_name], obj);
+            } else {
+              answers[track_name] = obj;
+            }
+        });
+
+        return answers
+      }
+
+      function send_answers() {
+        var answers = get_answers();
+        var data = {
+          answers: answers,
+          page: '{{page}}'
+        };
+
+        $.ajax({
+            url: '{{ url_for('annotator', annotation_task=annotation_task) }}',
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (data) {
+                console.log(data);
+                window.location.replace("{{ url_for('annotator', annotation_task=annotation_task) }}"+ "?p={{page+1}}");
+            },
+            data: JSON.stringify(data)
+        });
+      }
+
+      $('#submit-button').click(function() {
+        send_answers();
+      });
+
+
+      // player stuff
+      $(".waveform").each(function(){
+        // create wavesurfer element
+        var track_name = $(this).attr('track-path');
+        var wavesurfer = WaveSurfer.create({
+          container: this,
+          waveColor: 'black',
+          progressColor: 'grey',
+          barWidth: '1',
+          backend: 'MediaElement'
+        });
+
+        // add play pause feature
+        var play_pause_button = $(this).parent().children('.playPause');
+        play_pause_button.on('click', function() {
+          wavesurfer.playPause();
+        });
+
+        // Toggle play/pause text
+        wavesurfer.on('play', function() {
+          play_pause_button.find('.play').css("display", "none");
+          play_pause_button.find('.pause').css("display", "");
+        });
+        wavesurfer.on('pause', function() {
+          play_pause_button.find('.play').css("display", "");
+          play_pause_button.find('.pause').css("display", "none");
+        });
+
+        // load track
+        wavesurfer.load(track_name);
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <h1>Task: {{annotation_task}}</h1>
+  <h2>You are on page #{{page}}</h2>
+  {% if page_already_annotated %}
+    <h3 style="color:red">
+      You already annotated this page.
+      Submitting new annotations will overwrite previous submitted ones.
+    </h3>
+  {% endif %}
+
+  <div id="sound-container">
+
+    <!-- iterate through each sound track -->
+    {% for sound_track in sound_tracks %}
+
+      <!-- player -->
+      <div class="track-container" style="border-style:solid; border-color:gray; width:1fr;" id="{{sound_track}}">
+        <h2>{{sound_track}}</h2>
+        <div class="player-container">
+          <div class="waveform" track-path="{{folder_with_audio_files + sound_track}}"></div>
+          <button class="playPause" style="margin-left:10px; width:50px; height: 30px;">
+            <span class="play">
+              Play
+            </span>
+            <span class="pause" style="display: none;">
+              Pause
+            </span>
+          </button>
+        </div>
+        <br>
+
+        <!-- form -->
+        {% include annotation_task + '.html' %}
+
+      </div>
+    {% endfor %}
+  </div>
+
+  <br>
+  <button id="submit-button" style="margin-left:100px; width:150px; height: 100px;">submit</button>
+  <br>
+
+</body>
+
+</html>
