@@ -2,8 +2,7 @@
 {% if page_annotations.get(sound, {}).get(feature) == val or (sound not in page_annotations and default == val) %}checked="checked"{% endif %}
 {%- endmacro %}
 
-{% from "arousal.html" import arousal_form with context %}
-{% from "valence.html" import valence_form with context %}
+{% from "arousal_and_valence.html" import arousal_form with context %}
 
 <!DOCTYPE html>
 <html>

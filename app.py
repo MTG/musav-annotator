@@ -24,18 +24,12 @@ app = Flask(__name__, static_url_path="/static")
 # You should not change this after having started annotating!
 CONFIG_SOUNDS_PER_PAGE = os.getenv("SOUNDS_PER_PAGE", "5")
 CONFIG_CHUNK = os.getenv("CHUNK_NUMBER")
-CONFIG_ANNOTATION_TASKS = os.getenv("ANNOTATION_TASKS", "valence,arousal,all")
 
 # The location that annotations are written to
 ANNOTATION_FOLDER = "annotations"
 
 # There are three different annotation tasks
-VALID_ANNOTATION_TASKS = {
-    "valence",
-    "arousal",
-    "all",
-}
-
+ANNOTATION_TASKS = ["arousal_and_valence"]
 
 # Enter here the path to the file containing the path of the sound track you have to annotate.
 # e.g. 'static/track_paths.json'
@@ -47,13 +41,6 @@ if not os.path.exists(PATH_TO_FILE_WITH_SOUND_IDS):
 
 
 FOLDER_WITH_AUDIO_FILES = "static/tracks/"
-
-
-ANNOTATION_TASKS = []
-for ann_task in CONFIG_ANNOTATION_TASKS.split(","):
-    if ann_task not in VALID_ANNOTATION_TASKS:
-        raise ValueError("{} is not a valid annotation task".format(ann_task))
-    ANNOTATION_TASKS.append(ann_task)
 
 try:
     NUM_SOUNDS_PER_PAGE = int(CONFIG_SOUNDS_PER_PAGE)
@@ -90,9 +77,7 @@ def annotator(annotation_task):
         for track_name, answers in data["answers"].items():
             track_name_without_folder = track_name.replace("/", "_")
 
-            annotation_file = "{}-page-{}-{}.json".format(
-                annotation_task, page, track_name_without_folder
-            )
+            annotation_file = "page-{}-{}.json".format(page, track_name_without_folder)
             with open(os.path.join(ANNOTATION_FOLDER, annotation_file), "w") as fp:
                 json.dump(answers, fp)
         return json.dumps({"success": True}), 200, {"ContentType": "application/json"}
@@ -105,11 +90,7 @@ def annotator(annotation_task):
         file for file in os.listdir("annotations") if file.endswith(".json")
     ]
     annotated_pages_set = set(
-        [
-            int(annotation_file.split("-")[-2])
-            for annotation_file in annotation_files
-            if annotation_file.startswith(annotation_task)
-        ]
+        [int(annotation_file.split("-")[-2]) for annotation_file in annotation_files]
     )
     annotated_pages = sorted(list(annotated_pages_set))
 
@@ -120,7 +101,7 @@ def annotator(annotation_task):
         else:
             redirect_page = 1
         return redirect(
-            url_for("annotator", annotation_task=annotation_task, p=redirect_page)
+            url_for("annotator", annotation_task="arousal_and_valence", p=redirect_page)
         )
 
     else:
@@ -140,9 +121,7 @@ def annotator(annotation_task):
     page_annotations = {}
     for tr in sound_tracks:
         track_name_without_folder = tr.replace("/", "_")
-        annotation_file = "{}-page-{}-{}.json".format(
-            annotation_task, page, track_name_without_folder
-        )
+        annotation_file = "page-{}-{}.json".format(page, track_name_without_folder)
         full_filename = os.path.join(ANNOTATION_FOLDER, annotation_file)
         if os.path.exists(full_filename):
             with open(full_filename, "r") as fp:
