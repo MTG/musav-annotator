@@ -1,14 +1,35 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h1>MTG Valence Arousal Annotator</h1>
-<h2>Choose one of the tasks bellow</h2>
+  <h1>MTG Valence Arousal Annotator</h1>
+  
+  <p>Welcome to the MTG arousal and valence annotator!</p>
+
+  <p>Please read carefully this instructions if this is the first time you use it:</p>
+
+  <p>The goal of this tool is to collect clean annotations for arousal and valence of music. 
+  It is essential that all the questions sufficiently considered.
+  For this we recommend to use a headset or good quality monitors and to perform the annotations in a quite environment when possible.
+  It is mandatory to select the most suitable answer for all the questions. We provide a checkbox to mark cases where the solution is not clear.</p>
+
+  For this experiment, we use the following definition of valence and arousal:
+  <ul>
+    <li>Arousal: the pleasantness of a stimulus</li>
+    <li>Valence: the intensity of emotion provoked by a stimulus.</li>
+  </ul> 
+
+  Thanks, and good luck with the annotations!
+
+  <h2>Choose one of the tasks bellow</h2>
   {% for annotation_task in annotation_tasks %}
-    <form style="width:150px; height: 100px; display: inline"
+      <form style="width:150px; height: 100px; display: inline"
           action="{{ url_for('annotator', annotation_task=annotation_task) }}"
           method="get">
       <button>{{annotation_task}}</button>
-    </form>
+      </form>
   {% endfor %}
+
+
+
 </body>
 </html>
