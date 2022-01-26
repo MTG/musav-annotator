@@ -33,7 +33,7 @@ ANNOTATION_TASKS = ["arousal_and_valence"]
 
 # Enter here the path to the file containing the path of the sound track you have to annotate.
 # e.g. 'static/track_paths.json'
-PATH_TO_FILE_WITH_SOUND_IDS = "static/stratified_test_elements_fold_{}.json".format(
+PATH_TO_FILE_WITH_SOUND_IDS = "static/stratified_test_elements_fold_{}.jsonl".format(
     CONFIG_CHUNK
 )
 if not os.path.exists(PATH_TO_FILE_WITH_SOUND_IDS):
@@ -110,28 +110,29 @@ def annotator(annotation_task):
         if page in annotated_pages_set:
             page_already_annotated = True
 
-    all_sound_tracks = json.load(open(PATH_TO_FILE_WITH_SOUND_IDS, "rb"))
+    with open(PATH_TO_FILE_WITH_SOUND_IDS, "r") as jld:
+        all_sound_tracks = [json.loads(line) for line in jld.readlines()]
 
     # get a chunk of sound tracks according to the requested page number
-    sound_tracks = all_sound_tracks[
+    sound_pairs = all_sound_tracks[
         (page - 1) * NUM_SOUNDS_PER_PAGE : page * NUM_SOUNDS_PER_PAGE
     ]
 
     # Load annotations for any sounds already annotated on this page
     page_annotations = {}
-    for tr in sound_tracks:
-        track_name_without_folder = tr.replace("/", "_")
-        annotation_file = "page-{}-{}.json".format(page, track_name_without_folder)
+    for pair in sound_pairs:
+        pid = pair['id']
+        annotation_file = "page-{}-{}.json".format(page, pid)
         full_filename = os.path.join(ANNOTATION_FOLDER, annotation_file)
         if os.path.exists(full_filename):
             with open(full_filename, "r") as fp:
                 data = json.load(fp)
-                page_annotations[tr] = data
+                page_annotations[pid] = data
 
     return render_template(
         "index.html",
         folder_with_audio_files=FOLDER_WITH_AUDIO_FILES,
-        sound_tracks=sound_tracks,
+        pairs=sound_pairs,
         page=page,
         annotation_task=annotation_task,
         page_already_annotated=page_already_annotated,

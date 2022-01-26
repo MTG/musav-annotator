@@ -49,13 +49,13 @@ If you prefer to not use Docker, you can set up the application manually
 Export environment variables for settings:
 
     export SOUNDS_PER_PAGE=10
-    export ANNOTATION_TASKS=valence,arousal,all
     export CHUNK_NUMBER=5
 
 Copy your audio files to `static/tracks/`
+You can use `CHUNK_NUMBER=example` for development purposes.
 
 #### Start server
-Run 
+Run
 
     flask run
 
@@ -81,10 +81,10 @@ Open Anaconda prompt and run:
 Export environment variables for settings:
 
     SET SOUNDS_PER_PAGE=10
-    SET ANNOTATION_TASKS=valence,arousal,all
     SET CHUNK_NUMBER=5
 
 Copy your audio files to `static/tracks/`
+You can use `CHUNK_NUMBER=example` for development purposes.
 
 #### Start server
 Run 

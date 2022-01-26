@@ -3,9 +3,8 @@ annotations/*
 
 static/tracks/*
 !static/tracks/.keep
-!static/tracks/NeoSolid4.mp3
 
-ja_env/
+env/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

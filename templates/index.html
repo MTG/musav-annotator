@@ -125,13 +125,26 @@
   <div id="sound-container">
 
     <!-- iterate through each sound track -->
-    {% for sound_track in sound_tracks %}
+    {% for pair in pairs %}
 
       <!-- player -->
-      <div class="track-container" style="border-style:solid; border-color:gray; width:1fr;" id="{{sound_track}}">
-        <h2>{{sound_track}}</h2>
-        <div class="player-container">
-          <div class="waveform" track-path="{{folder_with_audio_files + sound_track}}"></div>
+      <div class="track-container" style="border-style:solid; border-color:gray; width:1fr; display: inline-block-child" id="{{pair['id']}}">
+        <h2>pair id: {{pair['id']}}</h2>
+        <div class="player-container" style="display: inline-block-child">
+          <h3>A</h3>
+          <div class="waveform " track-path="{{folder_with_audio_files + pair['a']}}"></div>
+          <button class="playPause" style="margin-left:10px; width:50px; height: 30px;">
+            <span class="play">
+              Play
+            </span>
+            <span class="pause" style="display: none;">
+              Pause
+            </span>
+          </button>
+        </div>
+        <div class="player-container" style="display: inline-block-child">
+          <h3>B</h3>
+          <div class="waveform" track-path="{{folder_with_audio_files + pair['b']}}"></div>
           <button class="playPause" style="margin-left:10px; width:50px; height: 30px;">
             <span class="play">
               Play
