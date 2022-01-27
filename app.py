@@ -22,7 +22,7 @@ app = Flask(__name__, static_url_path="/static")
 
 # The number of audio track per page.
 # You should not change this after having started annotating!
-CONFIG_SOUNDS_PER_PAGE = os.getenv("SOUNDS_PER_PAGE", "5")
+CONFIG_SOUNDS_PER_PAGE = os.getenv("SOUNDS_PER_PAGE", "6")
 CONFIG_CHUNK = os.getenv("CHUNK_NUMBER")
 
 # The location that annotations are written to

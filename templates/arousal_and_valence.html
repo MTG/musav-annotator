@@ -3,7 +3,10 @@
     <input type="radio" name="higher_arousal" value="not_selected" checked="checked" style="display:none"><br>
     <input type="radio" name="higher_arousal" value="a">A has a higher arousal than B<br>
     <input type="radio" name="higher_arousal" value="b">B has a higher arousal than A<br>
-    <input type="radio" name="higher_arousal" value="equivalent">A and B have the same arousal
+    <input type="radio" name="higher_arousal" value="equivalent">A and B have the same arousal<br><br>
+
+    <input type="checkbox" name="unsure_arousal" value="off" checked="checked" style="display:none">
+    <input type="checkbox" name="unsure_arousal"> I am not sure about the arousal
   </div>
 </form>
 
@@ -12,19 +15,9 @@
     <input type="radio" name="higher_valence" value="not_selected" checked="checked" style="display:none"><br>
     <input type="radio" name="higher_valence" value="a">A has a higher valence than B<br>
     <input type="radio" name="higher_valence" value="b">B has a higher valence than A<br>
-    <input type="radio" name="higher_valence" value="equivalent">A and B have the same valence
-  </div>
-</form>
+    <input type="radio" name="higher_valence" value="equivalent">A and B have the same valence<br><br>
 
-
-<form class="form" action="" id="form-arousal-unsure-{{sound_track}}">
-  <div class="box">
-    <input type="checkbox" name="unsure_arousal"> I am not sure about the arousal
-  </div>
-</form>
-
-<form class="form" action="" id="form-valence-unsure-{{sound_track}}">
-  <div class="box">
-    <input type="checkbox" name="unsure_valence"> I am not sure about the valence
-  </div>
+    <input type="checkbox" name="unsure_valence" value="off" checked="checked" style="display:none">
+    <input type="checkbox" name="unsure_valence" value="on"> I am not sure about the valence
+</div>
 </form>
