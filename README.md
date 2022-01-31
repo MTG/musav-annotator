@@ -71,8 +71,8 @@ Install Anaconda, following the instructions in [here](https://docs.anaconda.com
 
 Open Anaconda prompt and run:
 
-    conda create --name mtg-jamendo
-    conda activate mtg-jamendo
+    conda create --name mtg-emotion
+    conda activate mtg-emotion
     conda install flask
 
 
