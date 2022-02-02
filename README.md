@@ -8,18 +8,17 @@ Install [Docker desktop](https://docs.docker.com/install/) (Mac, Windows) or Doc
 
 The application is configured by editing the `docker-compose.yml` file.
 
-In the section `environment`, set `CHUNK_NUMBER` to the chunk that you are editing
+In the section `environment`, set `CHUNK_NUMBER` to the chunk that you are editing (use three-digit format: `000`, `001', ..., `010`, ...)
 
     environment:
       - SOUNDS_PER_PAGE=6
-      - ANNOTATION_TASKS=valence,arousal,all
-      - CHUNK_NUMBER=5
+      - CHUNK_NUMBER=099
       
 In the section `volumes`, add the full path to the location of your audio 
 
     volumes:
       - .:/app
-      - <path to your audio here>:/app/static/tracks
+      - <path to your audio chunk folder here>:/app/static/tracks
 
 
 ### Startup
@@ -35,7 +34,7 @@ and go to http://localhost:5000
 
 If you prefer to not use Docker, you can set up the application manually
 
-### MAC OS and Linux
+### macOS and Linux
 
 #### Install dependencies
 
@@ -49,7 +48,7 @@ If you prefer to not use Docker, you can set up the application manually
 Export environment variables for settings:
 
     export SOUNDS_PER_PAGE=6
-    export CHUNK_NUMBER=5
+    export CHUNK_NUMBER=099
 
 Copy your audio files to `static/tracks/`
 You can use `CHUNK_NUMBER=example` for development purposes.
@@ -81,7 +80,7 @@ Open Anaconda prompt and run:
 Export environment variables for settings:
 
     SET SOUNDS_PER_PAGE=6
-    SET CHUNK_NUMBER=5
+    SET CHUNK_NUMBER=099
 
 Copy your audio files to `static/tracks/`
 You can use `CHUNK_NUMBER=example` for development purposes.

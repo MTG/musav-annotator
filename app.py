@@ -28,12 +28,12 @@ CONFIG_CHUNK = os.getenv("CHUNK_NUMBER")
 # The location that annotations are written to
 ANNOTATION_FOLDER = "annotations"
 
-# There are three different annotation tasks
+# Annotate arousal and valence in a single task.
 ANNOTATION_TASKS = ["arousal_and_valence"]
 
 # Enter here the path to the file containing the path of the sound track you have to annotate.
 # e.g. 'static/track_paths.json'
-PATH_TO_FILE_WITH_SOUND_IDS = "static/stratified_test_elements_fold_{}.jsonl".format(
+PATH_TO_FILE_WITH_SOUND_IDS = "static/triplets.all.chunk.{}.pairs".format(
     CONFIG_CHUNK
 )
 if not os.path.exists(PATH_TO_FILE_WITH_SOUND_IDS):
@@ -70,6 +70,10 @@ def annotator(annotation_task):
     if annotation_task not in ANNOTATION_TASKS:
         abort(404)
 
+    # Create annotations folder if it does not yet exist.
+    if not os.path.exists(ANNOTATION_FOLDER):
+        os.mkdir(ANNOTATION_FOLDER)
+
     if request.method == "POST":
         # save annotations to json file
         data = request.get_json()
@@ -87,7 +91,7 @@ def annotator(annotation_task):
 
     # check completion
     annotation_files = [
-        file for file in os.listdir("annotations") if file.endswith(".json")
+        file for file in os.listdir(ANNOTATION_FOLDER) if file.endswith(".json")
     ]
     annotated_pages_set = set(
         [int(annotation_file.split("-")[-2]) for annotation_file in annotation_files]
