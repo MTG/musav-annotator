@@ -11,7 +11,7 @@ The application is configured by editing the `docker-compose.yml` file.
 In the section `environment`, set `CHUNK_NUMBER` to the chunk that you are editing
 
     environment:
-      - SOUNDS_PER_PAGE=10
+      - SOUNDS_PER_PAGE=6
       - ANNOTATION_TASKS=valence,arousal,all
       - CHUNK_NUMBER=5
       
@@ -48,7 +48,7 @@ If you prefer to not use Docker, you can set up the application manually
 
 Export environment variables for settings:
 
-    export SOUNDS_PER_PAGE=10
+    export SOUNDS_PER_PAGE=6
     export CHUNK_NUMBER=5
 
 Copy your audio files to `static/tracks/`
@@ -80,7 +80,7 @@ Open Anaconda prompt and run:
 
 Export environment variables for settings:
 
-    SET SOUNDS_PER_PAGE=10
+    SET SOUNDS_PER_PAGE=6
     SET CHUNK_NUMBER=5
 
 Copy your audio files to `static/tracks/`
