@@ -121,7 +121,7 @@ def annotator(annotation_task):
     # Load annotations for any sounds already annotated on this page
     page_annotations = {}
     for pair in sound_pairs:
-        pid = pair['id']
+        pid = pair['pairid']
         annotation_file = "page-{}-{}.json".format(page, pid)
         full_filename = os.path.join(ANNOTATION_FOLDER, annotation_file)
         if os.path.exists(full_filename):

@@ -140,11 +140,10 @@
     {% for pair in pairs %}
 
       <!-- player -->
-      <div class="track-container" style="border-style:solid; border-color:gray;" id="{{pair['id']}}">
-        <h2>pair id: {{pair['id']}}</h2>
+      <div class="track-container" style="border-style:solid; border-color:gray;" id="{{pair['pairid']}}">
         <div class="player-container">
           <h3>Track A</h3>
-          <div class="waveform " track-path="{{folder_with_audio_files + pair['a']}}"></div>
+          <div class="waveform " track-path="{{folder_with_audio_files + pair['a_file']}}"></div>
           <button class="playPause" style="width:50px; height: 30px;">
             <span class="play">
               Play
@@ -156,7 +155,7 @@
         </div>
         <div class="player-container">
           <h3>Track B</h3>
-          <div class="waveform" track-path="{{folder_with_audio_files + pair['b']}}"></div>
+          <div class="waveform" track-path="{{folder_with_audio_files + pair['b_file']}}"></div>
           <button class="playPause" style="width:50px; height: 30px;">
             <span class="play">
               Play
@@ -170,7 +169,7 @@
 
         <!-- form -->
         {% include annotation_task + '.html' %}
-
+        <h3 style="font-size:9px;">pair id: {{pair['pairid']}}</h2>
       </div>
     {% endfor %}
   </div>
