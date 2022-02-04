@@ -93,6 +93,7 @@
       $(".waveform").each(function(){
         // create wavesurfer element
         var track_name = $(this).attr('track-path');
+        var volume = $(this).attr('volume');
         var wavesurfer = WaveSurfer.create({
           container: this,
           waveColor: 'black',
@@ -119,6 +120,7 @@
 
         // load track
         wavesurfer.load(track_name);
+        wavesurfer.setVolume(volume);
       });
     });
   </script>
@@ -143,7 +145,7 @@
       <div class="track-container" style="border-style:solid; border-color:gray;" id="{{pair['pairid']}}">
         <div class="player-container">
           <h3>Track A</h3>
-          <div class="waveform " track-path="{{folder_with_audio_files + pair['a_file']}}"></div>
+          <div class="waveform " track-path="{{folder_with_audio_files + pair['a_file']}}" volume={{pair['a_volume']}}></div>
           <button class="playPause" style="width:50px; height: 30px;">
             <span class="play">
               Play
@@ -155,7 +157,7 @@
         </div>
         <div class="player-container">
           <h3>Track B</h3>
-          <div class="waveform" track-path="{{folder_with_audio_files + pair['b_file']}}"></div>
+          <div class="waveform" track-path="{{folder_with_audio_files + pair['b_file']}}" volume={{pair['b_volume']}}></div>
           <button class="playPause" style="width:50px; height: 30px;">
             <span class="play">
               Play
