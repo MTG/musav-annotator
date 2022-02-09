@@ -11,14 +11,14 @@
   <style>
     input[type='radio'] { transform: scale(1); }
     .form {
-      display: inline-block;
       vertical-align: middle;
-      grid-template-columns: 1fr 1fr;
-      grid-gap: 5px;
+      text-align: center;
       background-color: white;
       color: #444;
     }
     .box {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
       background-color: white;
       color: black;
       border-radius: 5px;
@@ -27,13 +27,11 @@
     }
     .track-container {
         display: inline-block;
-        grid-template-columns: 1fr 1fr;
+        text-align: center;
     }
     .player-container {
         display: inline-block;
-        width: 45%;
-        grid-template-columns: 1fr 1fr;
-        text-align: center;
+        width: 48%;
     }
 
   </style>

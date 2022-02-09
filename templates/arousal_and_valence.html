@@ -1,23 +1,56 @@
 <form class="form" action="" id="form-arousal-{{sound_track}}">
-  <div class="box">
-    <input type="radio" name="higher_arousal" value="not_selected" checked="checked" style="display:none"><br>
-    <input type="radio" name="higher_arousal" value="a">A has a higher arousal than B<br>
-    <input type="radio" name="higher_arousal" value="b">B has a higher arousal than A<br>
-    <input type="radio" name="higher_arousal" value="equivalent">A and B have the same arousal<br><br>
+    <p>Which song has more arousal?</p>
+    <div class="box">
+        <input type="radio" name="higher_arousal" value="not_selected" checked="checked" style="display:none">
 
-    <input type="checkbox" name="unsure_arousal" value="off" checked="checked" style="display:none">
-    <input type="checkbox" name="unsure_arousal"> I am not sure about the arousal
-  </div>
+        <label for="a">
+            <input type="radio" name="higher_arousal" value="a">
+            A
+        </label>
+
+        <label for="equivalent">
+            <input type="radio" name="higher_arousal" value="equivalent">
+            same arousal
+        </label>
+
+        <label for="b">
+            <input type="radio" name="higher_arousal" value="b">
+            B
+        </label>
+
+        <input type="checkbox" name="unsure_arousal" value="off" checked="checked" style="display:none">
+    </div>
+    <label for="unsure_arousal" style="color:black;">
+        <input type="checkbox" name="unsure_arousal" value="unsure_arousal">
+        I am not sure
+    </label>
 </form>
 
 <form class="form" action="" id="form-valence-{{sound_track}}">
-  <div class="box">
-    <input type="radio" name="higher_valence" value="not_selected" checked="checked" style="display:none"><br>
-    <input type="radio" name="higher_valence" value="a">A has a higher valence than B<br>
-    <input type="radio" name="higher_valence" value="b">B has a higher valence than A<br>
-    <input type="radio" name="higher_valence" value="equivalent">A and B have the same valence<br><br>
+    <p>Which song has more valence?</p>
+    <div class="box">
+        <input type="radio" name="higher_valence" value="not_selected" checked="checked" style="display:none">
 
-    <input type="checkbox" name="unsure_valence" value="off" checked="checked" style="display:none">
-    <input type="checkbox" name="unsure_valence" value="on"> I am not sure about the valence
-</div>
+        <label for="a">
+            <input type="radio" name="higher_valence" value="a">
+            A
+        </label>
+
+        <label for="equivalent">
+            <input type="radio" name="higher_valence" value="equivalent">
+            same valence
+        </label>
+
+        <label for="b">
+            <input type="radio" name="higher_valence" value="b">
+            B
+        </label>
+
+        <input type="checkbox" name="unsure_valence" value="off" checked="checked" style="display:none">
+    </div>
+
+    <label for="unsure_valence" style="color:black;">
+        <input type="checkbox" name="unsure_valence" value="unsure_valence">
+        I am not sure
+    </label>
 </form>
