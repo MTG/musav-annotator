@@ -14,6 +14,7 @@
 
 import json
 import os
+from math import ceil
 
 from flask import Flask, render_template, request, abort, redirect, url_for
 
@@ -117,6 +118,10 @@ def annotator(annotation_task):
     with open(PATH_TO_FILE_WITH_SOUND_IDS, "r") as jld:
         all_sound_tracks = [json.loads(line) for line in jld.readlines()]
 
+    # get total number of pages
+    n_sounds = len(all_sound_tracks)
+    n_pages = ceil(n_sounds / NUM_SOUNDS_PER_PAGE)
+
     # get a chunk of sound tracks according to the requested page number
     sound_pairs = all_sound_tracks[
         (page - 1) * NUM_SOUNDS_PER_PAGE : page * NUM_SOUNDS_PER_PAGE
@@ -138,6 +143,7 @@ def annotator(annotation_task):
         folder_with_audio_files=FOLDER_WITH_AUDIO_FILES,
         pairs=sound_pairs,
         page=page,
+        n_pages=n_pages,
         annotation_task=annotation_task,
         page_already_annotated=page_already_annotated,
         page_annotations=page_annotations,
