@@ -8,7 +8,7 @@ Install [Docker desktop](https://docs.docker.com/install/) (Mac, Windows) or Doc
 
 The application is configured by editing the `docker-compose.yml` file.
 
-In the section `environment`, set `CHUNK_NUMBER` to the chunk that you are editing (use three-digit format: `000`, `001', ..., `010`, ...)
+In the section `environment`, set `CHUNK_NUMBER` to the chunk that you are editing (use three-digit format: `000`, `001`, ..., `010`, ...)
 
     environment:
       - SOUNDS_PER_PAGE=6
