@@ -113,17 +113,24 @@
         
         $(this).attr('uniq-id', uniqueId);
 
-        play_pause_button.on('click', function() {
+        play_pause_button.on('click', function(e) {
+
+          const $target = $(e.currentTarget);
+          play_pause_button.toggleClass("isPlaying");
+          
           wavesurfer.playPause();
 
-          const pairPlayPause = play_pause_button.parent('.player-container').siblings('.player-container').find('.playPause');
-          
-          // If other pair is playing, pause it
-          if (pairPlayPause.hasClass('isPlaying')) {
-            pauseSiblingAudio(pairPlayPause);
+          const isPlaying = $('.isPlaying');
+
+          if (isPlaying.length === 1) {
+            return;
           }
 
-          play_pause_button.toggleClass("isPlaying");
+          $('.isPlaying').each(function() {
+            if (!$target.is($(this))) {
+              pauseSiblingAudio($(this));
+            } 
+          })
         });
 
         const pauseSiblingAudio = (play_pause_button) => {
