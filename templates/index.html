@@ -86,6 +86,7 @@
         send_answers();
       });
 
+      const waveSurfers = new Map();
 
       // player stuff
       $(".waveform").each(function(){
@@ -100,11 +101,48 @@
           backend: 'MediaElement'
         });
 
+        let uniqueId = Date.now();
+        // Store the Surfer object using an unique id along with its track name as a key
+        // UniqueId is needed because sometimes same track can appear twice (or more) on the same page. So we prevent
+        // start playing different pairs.
+
+        waveSurfers.set(uniqueId + '_' + track_name, wavesurfer);
+
         // add play pause feature
         var play_pause_button = $(this).parent().children('.playPause');
-        play_pause_button.on('click', function() {
+        
+        $(this).attr('uniq-id', uniqueId);
+
+        play_pause_button.on('click', function(e) {
+
+          const $target = $(e.currentTarget);
+          play_pause_button.toggleClass("isPlaying");
+          
           wavesurfer.playPause();
+
+          const isPlaying = $('.isPlaying');
+
+          if (isPlaying.length === 1) {
+            return;
+          }
+
+          $('.isPlaying').each(function() {
+            if (!$target.is($(this))) {
+              pauseSiblingAudio($(this));
+            } 
+          })
         });
+
+        const pauseSiblingAudio = (play_pause_button) => {
+
+          const waveformSibling = play_pause_button.siblings('.waveform');
+          const uniqueId = waveformSibling.attr('uniq-id');
+          const trackPath = waveformSibling.attr('track-path');
+        
+          const siblingWavesurfer = waveSurfers.get(uniqueId + '_' + trackPath);
+
+          siblingWavesurfer.playPause();
+        }
 
         // Toggle play/pause text
         wavesurfer.on('play', function() {
@@ -113,6 +151,7 @@
         });
         wavesurfer.on('pause', function() {
           play_pause_button.find('.play').css("display", "");
+          play_pause_button.removeClass('isPlaying');
           play_pause_button.find('.pause').css("display", "none");
         });
 
@@ -120,6 +159,7 @@
         wavesurfer.load(track_name);
         wavesurfer.setVolume(volume);
       });
+
     });
   </script>
 </head>
@@ -143,7 +183,7 @@
       <div class="track-container" style="border-style:solid; border-color:gray;" id="{{pair['pairid']}}">
         <div class="player-container">
           <h3>Track A</h3>
-          <div class="waveform " track-path="{{folder_with_audio_files + pair['a_file']}}" volume={{pair['a_volume']}}></div>
+          <div class="waveform" track-path="{{folder_with_audio_files + pair['a_file']}}" volume={{pair['a_volume']}}></div>
           <button class="playPause" style="width:50px; height: 30px;">
             <span class="play">
               Play
